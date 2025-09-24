@@ -6,7 +6,7 @@ import requests
 
 app = FastAPI()
 
-API_URL = "https://suzuki.com.bd/signup"
+API_URL = "https://suzuki.com.bd/signup?goback=%2F?"
 
 def random_name(length=5):
     return ''.join(random.choices(string.ascii_letters, k=length))
@@ -39,19 +39,22 @@ def signup(phone: str):
     ]
 
     headers = {
-        "Accept": "application/json, text/x-component, */*",
-        "Content-Type": "application/json"
+        "Accept": "text/x-component",
+        "Content-Type": "application/json",
+        "Next-Action": "b45aa2700649f9fa8fb8befec1519c7f2b4c2192",   # ডাইনামিকও হতে পারে
+        "Next-Url": "/signup",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache"
     }
 
     try:
         response = requests.post(API_URL, json=payload, headers=headers)
 
-        # Response টাইপ চেক করা
         content_type = response.headers.get("content-type", "")
-        if "application/json" in content_type:
+        if "application/json" in content_type or response.text.strip().startswith("{"):
             data = response.json()
         else:
-            data = {"raw_html": response.text[:500]}  # শুধু প্রথম 500 ক্যারেক্টার রাখলাম debug এর জন্য
+            data = {"raw_html": response.text[:500]}  # debug purpose
 
         return JSONResponse({
             "status": response.status_code,
