@@ -39,15 +39,23 @@ def signup(phone: str):
     ]
 
     headers = {
-        "Accept": "application/json",
+        "Accept": "application/json, text/x-component, */*",
         "Content-Type": "application/json"
     }
 
     try:
         response = requests.post(API_URL, json=payload, headers=headers)
+
+        # Response টাইপ চেক করা
+        content_type = response.headers.get("content-type", "")
+        if "application/json" in content_type:
+            data = response.json()
+        else:
+            data = {"raw_html": response.text[:500]}  # শুধু প্রথম 500 ক্যারেক্টার রাখলাম debug এর জন্য
+
         return JSONResponse({
             "status": response.status_code,
-            "response": response.json() if response.headers.get("content-type","").startswith("application/json") else response.text,
+            "response": data,
             "used_data": payload[0]
         })
     except Exception as e:
