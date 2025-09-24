@@ -42,9 +42,9 @@ def signup(phone: str):
         "Accept": "text/x-component",
         "Content-Type": "application/json",
         "Next-Action": "b45aa2700649f9fa8fb8befec1519c7f2b4c2192",   # ডাইনামিকও হতে পারে
-        "Next-Url": "/signup",
-        "Cache-Control": "no-cache",
-        "Pragma": "no-cache"
+        "Next-Router-State-Tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22(authentication)%22%2C%7B%22children%22%3A%5B%22signup%22%2C%7B%22children%22%3A%5B%22__PAGE__%3F%7B%5C%22goback%5C%22%3A%5C%22%2F%3F%5C%22%7D%22%2C%7B%7D%5D%7D%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+        "Next-Url": "/signup"
+      
     }
 
     try:
